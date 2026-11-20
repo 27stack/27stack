@@ -24,7 +24,7 @@ interface Card {
 
 const cards: Card[] = [
   // The home page's headline, styled as the hero styles it.
-  { slug: "slogan", headline: `You used to own<br>your computer.<br>You can again.` },
+  { slug: "slogan", headline: `We used to own<br>our computers.<br>We can again.` },
 ];
 
 /** The logo drawn for the navy ground, as it is. */

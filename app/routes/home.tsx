@@ -8,7 +8,7 @@ import "./home.css";
 
 export const meta: Route.MetaFunction = () =>
   pageMeta({
-    description: `Computing keeps swinging between someone else's machine and your own. ${SITE_NAME} is the swing back: an open foundation that makes a cloud something you own, with services you install like apps.`,
+    description: `Cities, schools, agencies and local businesses rent the software they run on, and pay for every change. ${SITE_NAME} is an open foundation for a cloud your organization owns: public infrastructure for anyone who wants their tools back.`,
     path: "/",
   });
 
@@ -73,18 +73,24 @@ export default function Home() {
       <SiteHeader />
       <main>
         <div className="hero">
-          <p className="eyebrow">A short changelog for computing</p>
+          <p className="eyebrow">An open cloud for public infrastructure</p>
           <h1>
-            You used to own
+            We used to own
             <br />
-            your computer.
+            our computers.
             <br />
-            You can again.
+            We can again.
           </h1>
-          <p className="hero-lead">
-            Computing keeps swinging between someone else's machine and your own. {SITE_NAME} is the swing back: an
-            open foundation that makes a cloud something you own, with services you install like apps.
-          </p>
+          <div className="hero-lead">
+            <p>
+              Computing keeps swinging between machines we rent and machines we own. Right now our cities, schools,
+              agencies and local businesses rent the software they run on, and pay for every change.
+            </p>
+            <p>
+              <strong>{SITE_NAME}</strong> is the swing back: an open foundation for a cloud your organization owns.
+              Public infrastructure for anyone who wants their tools back.
+            </p>
+          </div>
           {/* The chart keeps a readable width and scrolls sideways on a phone. */}
           <div className="swing">
             <div>

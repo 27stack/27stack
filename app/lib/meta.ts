@@ -9,7 +9,7 @@ interface PageMeta {
 }
 
 /** The preview card every page shares for now: the avatar and the slogan (scripts/og-images.ts). */
-const CARD = { path: "/og/slogan.png", alt: `${SITE_NAME}: You used to own your computer. You can again.` };
+const CARD = { path: "/og/slogan.png", alt: `${SITE_NAME}: We used to own our computers. We can again.` };
 
 /** The <title>, description and social preview tags for a page. */
 export function pageMeta({ title: pageTitle, description, path }: PageMeta) {

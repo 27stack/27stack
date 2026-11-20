@@ -14,9 +14,17 @@ test("the hero shows the headline, the swing chart, and ways into the plan and t
   const main = screen.getByRole("main");
   const hero = screen.container.querySelector<HTMLElement>(".hero")!;
 
-  expect(hero.textContent).toContain("A short changelog for computing");
+  expect(hero.querySelector(".eyebrow")?.textContent).toBe("An open cloud for public infrastructure");
+  // The lead says who has the problem, then what 27stack is and who it's for, in two paragraphs.
+  const [problem, answer, ...rest] = hero.querySelectorAll(".hero-lead > p");
+  expect(rest).toHaveLength(0);
+  expect(problem.textContent).toMatch(/our cities, schools,\s+agencies and local businesses rent the software/);
+  expect(answer.querySelector("strong")?.textContent).toBe("27stack");
+  expect(answer.textContent).toMatch(
+    /^27stack is the swing back: an open foundation for a cloud your organization owns\.\s+Public\s+infrastructure for anyone who wants their tools back\.$/,
+  );
   await expect
-    .element(main.getByRole("heading", { level: 1, name: /You used to own\s*your computer\.\s*You can again\./ }))
+    .element(main.getByRole("heading", { level: 1, name: /We used to own\s*our computers\.\s*We can again\./ }))
     .toBeInTheDocument();
   await expect.element(main.getByRole("img", { name: /A line swinging between theirs and yours/ })).toBeInTheDocument();
   expect(hero.querySelector("a.hero-plan")?.textContent).toBe("Read the plan");
