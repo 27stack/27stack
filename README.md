@@ -1,4 +1,4 @@
-# project2027
+# 27stack
 
 React Router 8 app on Cloudflare Workers, with Tailwind, MDX and Vitest browser tests.
 
@@ -11,4 +11,4 @@ React Router 8 app on Cloudflare Workers, with Tailwind, MDX and Vitest browser 
 | `pnpm typecheck` | Regenerates Wrangler and route types, then runs `tsc` |
 | `pnpm lint` | oxlint |
 | `pnpm build` | Production build |
-| `pnpm run deploy` | Deploys the `project2027` worker |
+| `pnpm run deploy` | Deploys the `27stack` worker |

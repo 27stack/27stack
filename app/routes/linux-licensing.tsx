@@ -8,7 +8,7 @@ import "./plan.css";
 const title = frontmatter.title ?? "What if Linux cost as much as Windows?";
 
 export const meta: Route.MetaFunction = () =>
-  pageMeta({ title: `${title} | Project 2027`, description: frontmatter.description, path: "/plan/linux-licensing" });
+  pageMeta({ title: title, description: frontmatter.description, path: "/plan/linux-licensing" });
 
 /** The math behind the plan's estimate of Linux's worth, written in content/linux-licensing.mdx. */
 export default function LinuxLicensingPage() {

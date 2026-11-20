@@ -14,3 +14,10 @@ test("the nav links to the plan, the contribute page and the about page", async 
   await expect.element(nav.getByRole("link", { name: "About" })).toHaveAttribute("href", "/about");
   expect(nav.getByRole("link").all()).toHaveLength(3);
 });
+
+test("the logo leads home, and is named for the site", async () => {
+  const Stub = createRoutesStub([{ path: "/", Component: SiteHeader }]);
+  const screen = await render(<Stub initialEntries={["/"]} />);
+
+  await expect.element(screen.getByRole("link", { name: "27stack home" })).toHaveAttribute("href", "/");
+});

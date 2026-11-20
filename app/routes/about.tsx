@@ -8,7 +8,7 @@ import "./plan.css";
 const title = frontmatter.title ?? "About";
 
 export const meta: Route.MetaFunction = () =>
-  pageMeta({ title: `${title} | Project 2027`, description: frontmatter.description, path: "/about" });
+  pageMeta({ title: title, description: frontmatter.description, path: "/about" });
 
 /** Who's behind the project, written in content/about.mdx. */
 export default function AboutPage() {

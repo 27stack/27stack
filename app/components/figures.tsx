@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import "./figures.css";
-import parisSvg from "./paris.svg?raw";
 import mazeSvg from "./maze.svg?raw";
 import permPricedSvg from "./perm-priced.svg?raw";
 import permSelectsSvg from "./perm-selects.svg?raw";
@@ -66,16 +65,16 @@ function SpendingChart() {
         {SPENDING.map(({ year }) => (
           <text key={year} className="f-muted" x={x(year)} y="216" fontSize="12" textAnchor="middle">{year}</text>
         ))}
-        <line className="s-red" x1={x(last.year)} y1={y(last.total)} x2={x(now.year)} y2={y(now.total)} strokeWidth={2} strokeLinecap="round" />
+        <line className="s-accent" x1={x(last.year)} y1={y(last.total)} x2={x(now.year)} y2={y(now.total)} strokeWidth={2} strokeLinecap="round" />
         <polyline
-          className="f-none s-red"
+          className="f-none s-accent"
           points={[now, ...ahead].map((p) => `${x(p.year)},${y(p.total)}`).join(" ")}
           strokeWidth={2}
           strokeDasharray="5 4"
           strokeLinejoin="round"
         />
         {SPENDING.map(({ year, total }) => (
-          <circle key={year} className="f-red s-bg" cx={x(year)} cy={y(total)} r="4" strokeWidth={2}>
+          <circle key={year} className="f-accent s-bg" cx={x(year)} cy={y(total)} r="4" strokeWidth={2}>
             <title>{`${year}: ${label(total)}${year > 2026 ? " (forecast)" : ""}`}</title>
           </circle>
         ))}
@@ -95,12 +94,12 @@ export function LockedIn() {
         <svg className="p27-pair-art" viewBox="140 36 180 224" role="img" aria-label="A statehouse chained to a padlocked vendor cloud">
           <g transform="translate(16 -26) scale(2)" className="f-none s-ink" strokeWidth={1} strokeLinecap="round" strokeLinejoin="round">
             <path d="M70 60 a18 18 0 0 1 32 -14 a20 20 0 0 1 38 8 a14 14 0 0 1 2 28 H72 a14 14 0 0 1 -2 -22Z" />
-            <path className="s-red" d="M104 64 v-6 a8 8 0 0 1 16 0 v6" strokeWidth={1.4} />
-            <rect className="f-red s-none" x="100" y="64" width="24" height="16" rx="2" />
+            <path className="s-accent" d="M104 64 v-6 a8 8 0 0 1 16 0 v6" strokeWidth={1.4} />
+            <rect className="f-accent s-none" x="100" y="64" width="24" height="16" rx="2" />
             <circle className="f-bg s-none" cx="112" cy="71" r="1.8" />
             {/* The chain, from the lock to the roof: links seen face-on, joined by links seen edge-on
                 that pass through them. */}
-            <g className="s-red">
+            <g className="s-accent">
               <path d="M112 78V87 M112 89V98" strokeWidth={1.6} />
               <rect x="109.8" y="84" width="4.4" height="8" rx="2.2" strokeWidth={1.2} />
               <rect x="109.8" y="95" width="4.4" height="8" rx="2.2" strokeWidth={1.2} />
@@ -128,12 +127,12 @@ export function RentVsOwn() {
       <svg
         viewBox="0 0 340 340"
         role="img"
-        aria-label="A large square for $313 billion a year in government tech spending, with a small red square in its corner, drawn to scale, for the $20 billion it would take to pay 100,000 developers"
+        aria-label="A large square for $313 billion a year in government tech spending, with a small orange square in its corner, drawn to scale, for the $20 billion it would take to pay 100,000 developers"
       >
         <rect className="f-none s-ink" x="20" y="20" width="300" height="300" strokeWidth={2} />
         {/* Inside the outline's stroke, which leaves 298 across, with its area to scale: a side of
             298 × √(20 / 313) ≈ 75.3. */}
-        <rect className="f-red" x="21" y="243.7" width="75.3" height="75.3" />
+        <rect className="f-accent" x="21" y="243.7" width="75.3" height="75.3" />
         <text className="f-ink t-display" x="40" y="82" fontSize="56">$313B</text>
         <text className="f-muted" x="42" y="108" fontSize="17">rented, every year</text>
         <text className="f-ink t-display" x="112" y="272" fontSize="32">$20B</text>
@@ -178,12 +177,12 @@ export function OneStateToFifty() {
               {frame === 1
                 ? FIRST_ADOPTERS.map((state) => {
                     const to = center(STATE_TILES[state]);
-                    return <line key={state} className="s-red" x1={origin.x} y1={origin.y} x2={to.x} y2={to.y} strokeWidth={1} strokeOpacity={0.55} />;
+                    return <line key={state} className="s-accent" x1={origin.x} y1={origin.y} x2={to.x} y2={to.y} strokeWidth={1} strokeOpacity={0.55} />;
                   })
                 : null}
               {Object.entries(STATE_TILES).map(([state, [row, col]]) => {
                 const lit = state === "VA" || adopted.includes(state);
-                const className = lit ? (state === "VA" && frame > 0 ? "f-red s-ink" : "f-red s-none") : "f-none s-faint";
+                const className = lit ? (state === "VA" && frame > 0 ? "f-accent s-ink" : "f-accent s-none") : "f-none s-faint";
                 return <rect key={state} className={className} x={col * STEP} y={row * STEP} width={TILE} height={TILE} rx={2} strokeWidth={lit ? 1.2 : 1} />;
               })}
             </svg>
@@ -198,12 +197,12 @@ export function OneStateToFifty() {
 /** A fax machine, drawn in a 56 × 50 box at (x, y). */
 function FaxIcon({ x, y }: { x: number; y: number }) {
   return (
-    <g className="f-none s-red" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round">
+    <g className="f-none s-accent" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round">
       <path d={`M${x + 13} ${y + 22} V${y + 3} H${x + 39} V${y + 22}`} />
       <path d={`M${x + 18} ${y + 9} H${x + 34} M${x + 18} ${y + 15} H${x + 30}`} strokeWidth={1.5} />
       <rect x={x + 2} y={y + 22} width="52" height="26" rx="4" />
       <rect x={x + 8} y={y + 29} width="20" height="7" rx="1" strokeWidth={1.5} />
-      {[0, 1, 2].map((c) => [0, 1].map((r) => <circle key={`${c}${r}`} className="f-red s-none" cx={x + 36 + c * 6} cy={y + 31 + r * 7} r="1.6" />))}
+      {[0, 1, 2].map((c) => [0, 1].map((r) => <circle key={`${c}${r}`} className="f-accent s-none" cx={x + 36 + c * 6} cy={y + 31 + r * 7} r="1.6" />))}
     </g>
   );
 }
@@ -211,7 +210,7 @@ function FaxIcon({ x, y }: { x: number; y: number }) {
 /** A sealed letter, drawn in a 56 × 50 box at (x, y). */
 function LetterIcon({ x, y }: { x: number; y: number }) {
   return (
-    <g className="f-none s-red" strokeWidth={2} strokeLinejoin="round">
+    <g className="f-none s-accent" strokeWidth={2} strokeLinejoin="round">
       <rect x={x + 2} y={y + 8} width="52" height="36" rx="3" />
       <path d={`M${x + 3} ${y + 10} L${x + 28} ${y + 29} L${x + 53} ${y + 10}`} />
     </g>
@@ -235,7 +234,7 @@ export function StillFaxing() {
   const spots = Array.from({ length: 10 }, (_, i) => ({ x: 60 + (i % 5) * 76, y: 40 + Math.floor(i / 5) * 84 }));
   return (
     <Figure maxWidth="28rem" caption="In 2025, 4 in 10 US hospitals often sent patients' records by mail or fax.">
-      <svg viewBox="48 28 384 160" role="img" aria-label="Ten hospitals: four in red sending records by fax machine or letter, six in white exchanging them electronically">
+      <svg viewBox="48 28 384 160" role="img" aria-label="Ten hospitals: four in orange sending records by fax machine or letter, six in white exchanging them electronically">
         {spots.map(({ x, y }, i) =>
           i < 4 ? (i % 2 ? <LetterIcon key={i} x={x} y={y} /> : <FaxIcon key={i} x={x} y={y} />) : <DigitalIcon key={i} x={x} y={y} />,
         )}
@@ -263,7 +262,7 @@ export function GrownNotDesigned() {
             strokeDasharray="6 6"
             d="M130 196 V70 M130 160 H96 V120 M130 130 H166 V90 M130 100 H104 M130 70 H156"
           />
-          <path className="s-red" strokeWidth={3} d="M116 202 L144 192" />
+          <path className="s-accent" strokeWidth={3} d="M116 202 L144 192" />
           <line className="s-faint" x1="240" y1="50" x2="240" y2="240" strokeDasharray="2 5" />
           <line className="s-dim" x1="280" y1="222" x2="440" y2="222" strokeWidth={1.5} />
           <path
@@ -271,7 +270,7 @@ export function GrownNotDesigned() {
             strokeWidth={3}
             d="M360 222 C360 210 384 208 384 195 C384 180 360 182 360 164 C359 140 359 110 358 72 M360 150 C350 140 340 130 334 112 M360 128 C372 118 382 106 386 90 M359 108 C352 98 348 90 346 78 M358 96 C362 88 368 82 372 74"
           />
-          <path className="s-red" strokeWidth={3} d="M346 202 L374 192" />
+          <path className="s-accent" strokeWidth={3} d="M346 202 L374 192" />
         </g>
         <text className="f-muted" x="130" y="270" fontSize="17" textAnchor="middle">designed breaks</text>
         <text className="f-muted" x="360" y="270" fontSize="17" textAnchor="middle">grown adapts</text>
@@ -310,10 +309,10 @@ export function TwoLocks() {
           <g key={x} className="f-none">
             <path className="s-ink" d={`M${x} 143 l3 1.5 l-6 1.5 l6 1.5 l-6 1.5 l3 1.5`} strokeWidth={1} />
             <rect className="s-ink" x={x - 3} y="151" width="6" height="9" strokeWidth={1} />
-            <rect className="s-red" x={x - 3} y="160" width="6" height={KEY_PIN_HEIGHTS[i]} strokeWidth={1.2} />
+            <rect className="s-accent" x={x - 3} y="160" width="6" height={KEY_PIN_HEIGHTS[i]} strokeWidth={1.2} />
           </g>
         ))}
-        <g className="f-none s-red" strokeWidth={1.4}>
+        <g className="f-none s-accent" strokeWidth={1.4}>
           <path d="M398 184 H334 L334 177 L340 172 L346 176 L353 178 L359 174 L366 169 L372 172 L379 175 L386 172 L398 172" />
           <circle cx="408" cy="178" r="9" />
           <circle cx="408" cy="178" r="3" strokeWidth={1} />
@@ -328,7 +327,7 @@ export function TwoLocks() {
  * What Linux would earn if licensed like Windows, drawn to scale against one smaller amount: a
  * square bottom-aligned to the right of the big one, labeled above.
  */
-function AgainstLinuxRevenue({ side, value, lines, red = false, label }: { side: number; value: string; lines: [string, string]; red?: boolean; label: string }) {
+function AgainstLinuxRevenue({ side, value, lines, accent = false, label }: { side: number; value: string; lines: [string, string]; accent?: boolean; label: string }) {
   const top = 320 - side;
   return (
     <Figure maxWidth="34rem">
@@ -337,8 +336,8 @@ function AgainstLinuxRevenue({ side, value, lines, red = false, label }: { side:
         <text className="f-ink t-display" x="30" y="84" fontSize="60">$1.3T</text>
         <text className="f-muted" x="32" y="112" fontSize="17">Revenue if Linux was</text>
         <text className="f-muted" x="32" y="133" fontSize="17">licensed like Windows</text>
-        <rect className={red ? "f-red" : "f-shape"} x="350" y={top} width={side} height={side} />
-        <text className={`${red ? "f-red" : "f-ink"} t-display`} x="350" y={top - 58} fontSize="34">{value}</text>
+        <rect className={accent ? "f-accent" : "f-shape"} x="350" y={top} width={side} height={side} />
+        <text className={`${accent ? "f-accent" : "f-ink"} t-display`} x="350" y={top - 58} fontSize="34">{value}</text>
         <text className="f-muted" x="350" y={top - 37} fontSize="15">{lines[0]}</text>
         <text className="f-muted" x="350" y={top - 19} fontSize="15">{lines[1]}</text>
       </svg>
@@ -436,9 +435,9 @@ export function LinuxVsMaintenance() {
     <AgainstLinuxRevenue
       side={23.1}
       value="$7.7B"
-      red
+      accent
       lines={["Spent maintaining all of", "open source, per year"]}
-      label="Squares drawn to scale: a large square for the $1.3 trillion Linux would earn if licensed like Windows, beside a tiny red square for the $7.7 billion a year spent maintaining all of open source"
+      label="Squares drawn to scale: a large square for the $1.3 trillion Linux would earn if licensed like Windows, beside a tiny orange square for the $7.7 billion a year spent maintaining all of open source"
     />
   );
 }
@@ -532,7 +531,7 @@ function PainPanel({ open, t, still }: { open: boolean; t: number; still: boolea
         return (
           <line
             key={i}
-            className={sealed ? "s-red" : "s-dim"}
+            className={sealed ? "s-accent" : "s-dim"}
             x1="135" x2="445" y1={painBoundary(i)} y2={painBoundary(i)}
             strokeWidth={sealed ? 2.5 : 1.5}
             strokeDasharray={sealed ? undefined : !open && i === 1 ? "14 6" : "4 10"}
@@ -542,16 +541,16 @@ function PainPanel({ open, t, still }: { open: boolean; t: number; still: boolea
       {PAIN_PEOPLE.map(([layer, x], j) => (
         <circle key={j} className="f-ink" cx={x} cy={painCenter(layer) + (j % 2 ? 8 : -6)} r="5" />
       ))}
-      {trail ? <line className="s-red" x1={PAIN_X} x2={PAIN_X} y1={from} y2={trail.to} strokeWidth={2} strokeOpacity={trail.opacity} strokeDasharray="2 4" strokeLinecap="round" /> : null}
-      {ripple ? <line className="s-red" x1={PAIN_X - ripple.half} x2={PAIN_X + ripple.half} y1={stopY} y2={stopY} strokeWidth={3} strokeOpacity={ripple.opacity} strokeLinecap="round" /> : null}
+      {trail ? <line className="s-accent" x1={PAIN_X} x2={PAIN_X} y1={from} y2={trail.to} strokeWidth={2} strokeOpacity={trail.opacity} strokeDasharray="2 4" strokeLinecap="round" /> : null}
+      {ripple ? <line className="s-accent" x1={PAIN_X - ripple.half} x2={PAIN_X + ripple.half} y1={stopY} y2={stopY} strokeWidth={3} strokeOpacity={ripple.opacity} strokeLinecap="round" /> : null}
       {rings.map((ring, k) => (
-        <circle key={k} className="f-none s-red" cx={PAIN_X} cy={ring.y} r={ring.r} strokeWidth={2} strokeOpacity={ring.opacity} />
+        <circle key={k} className="f-none s-accent" cx={PAIN_X} cy={ring.y} r={ring.r} strokeWidth={2} strokeOpacity={ring.opacity} />
       ))}
-      {pulse !== null ? <circle className="f-red" cx={PAIN_X} cy={pulse} r="6" /> : null}
-      <circle className={fixed ? "f-ink" : "f-red"} cx={PAIN_X} cy={from} r="6" />
-      <rect className={`f-bg ${fixed ? "s-ink" : "s-red"}`} x={PAIN_X - 10} y={bugY - 10} width="20" height="20" rx="3" strokeWidth={2} />
+      {pulse !== null ? <circle className="f-accent" cx={PAIN_X} cy={pulse} r="6" /> : null}
+      <circle className={fixed ? "f-ink" : "f-accent"} cx={PAIN_X} cy={from} r="6" />
+      <rect className={`f-bg ${fixed ? "s-ink" : "s-accent"}`} x={PAIN_X - 10} y={bugY - 10} width="20" height="20" rx="3" strokeWidth={2} />
       <path
-        className={`f-none ${fixed ? "s-ink" : "s-red"}`}
+        className={`f-none ${fixed ? "s-ink" : "s-accent"}`}
         d={fixed ? `M${PAIN_X - 5} ${bugY} l4 4 l7 -8` : `M${PAIN_X - 5} ${bugY - 5} l10 10 M${PAIN_X + 5} ${bugY - 5} l-10 10`}
         strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round"
       />
@@ -587,18 +586,6 @@ export function PaperMaze() {
   return (
     <figure className="p27-figure p27-maze" style={{ maxWidth: "40rem" }}>
       <div dangerouslySetInnerHTML={{ __html: mazeSvg }} />
-    </figure>
-  );
-}
-
-/** A rat on a Paris rooftop, looking out at the Eiffel Tower. */
-export function ParisRooftop() {
-  return (
-    <figure className="p27-figure p27-paris" style={{ maxWidth: "40rem" }}>
-      <div dangerouslySetInnerHTML={{ __html: parisSvg }} />
-      <figcaption className="p27-paris-quote">
-        <blockquote>Not everyone can become a great chef, but a great chef can come from anywhere.</blockquote>
-      </figcaption>
     </figure>
   );
 }
@@ -675,10 +662,10 @@ export function TwoChokepoints() {
   return (
     <Figure maxWidth="44rem" className="p27-choke">
       <div className="p27-choke-grid">
-        <Passage title="Oil: the Strait of Hormuz" label="Oil tankers approach a red block in the narrow Strait of Hormuz.">
+        <Passage title="Oil: the Strait of Hormuz" label="Oil tankers approach an orange block in the narrow Strait of Hormuz.">
           <path className="f-none s-dim" strokeWidth={1.6} strokeDasharray="5 8" d="M18 210H249 M311 210H542" />
           {[58, 124, 190].map((x) => <Tanker key={x} x={x} />)}
-          <path className="f-none s-red" strokeWidth={5} d="M266 196L294 224 M294 196L266 224" />
+          <path className="f-none s-accent" strokeWidth={5} d="M266 196L294 224 M294 196L266 224" />
         </Passage>
         <Passage
           title="Software: a vendor’s off switch"
@@ -688,9 +675,9 @@ export function TwoChokepoints() {
           <path className="f-none s-faint" strokeWidth={1.6} strokeDasharray="3 9" d="M330 210H542" />
           {APP_ICONS.map((icon, i) => <AppWindow key={icon.key} x={58 + i * 66} icon={icon} />)}
           {APP_ICONS.map((icon, i) => <AppWindow key={icon.key} x={373 + i * 66} icon={icon} off />)}
-          <rect className="f-bg s-red" strokeWidth={4} x="235" y="183" width="90" height="54" rx="27" />
-          <circle className="f-red" cx="261" cy="210" r="18" />
-          <text className="f-red" x="280" y="160" fontSize="15" fontWeight="600" letterSpacing="1.5" textAnchor="middle">
+          <rect className="f-bg s-accent" strokeWidth={4} x="235" y="183" width="90" height="54" rx="27" />
+          <circle className="f-accent" cx="261" cy="210" r="18" />
+          <text className="f-accent" x="280" y="160" fontSize="15" fontWeight="600" letterSpacing="1.5" textAnchor="middle">
             OFF
           </text>
         </Passage>
@@ -756,7 +743,7 @@ function PlugInIcon() {
       <g className="f-none" strokeLinecap="round" strokeLinejoin="round">
         <rect className="s-muted" x="20" y="18" width="34" height="26" rx="3" strokeWidth={1.6} />
         <path className="s-muted" d="M32 26V34 M42 26V34" strokeWidth={1.6} />
-        <path className="s-red" d="M37 56V48 M33 52L37 48L41 52" strokeWidth={1.8} />
+        <path className="s-accent" d="M37 56V48 M33 52L37 48L41 52" strokeWidth={1.8} />
         <path className="s-ink" d="M33 58V66 M41 58V66" strokeWidth={2} />
         <rect className="s-ink" x="28" y="66" width="18" height="16" rx="2" strokeWidth={2} />
         <path className="s-ink" d="M37 82V120Q37 132 49 132H110" strokeWidth={2} />
@@ -765,10 +752,10 @@ function PlugInIcon() {
           <g key={y}>
             <rect className="s-muted" x="118" y={y} width="54" height="22" rx="2" strokeWidth={1.4} />
             <path className="s-dim" d={`M125 ${y + 9}H146 M125 ${y + 14}H140`} strokeWidth={1.4} />
-            <circle className="f-red s-none" cx="163" cy={y + 11} r="2.5" />
+            <circle className="f-accent s-none" cx="163" cy={y + 11} r="2.5" />
           </g>
         ))}
-        <circle className="f-red s-none" cx="145" cy="125" r="3" />
+        <circle className="f-accent s-none" cx="145" cy="125" r="3" />
         <path className="s-ink" d="M120 140V148 M170 140V148" strokeWidth={2} />
       </g>
     </svg>
@@ -783,8 +770,8 @@ function SetUpIcon() {
       <path className="f-none s-dim" d="M16 40H184" strokeWidth={1.4} />
       {[28, 36].map((cx) => <circle key={cx} className="f-muted" cx={cx} cy="31" r="2" />)}
       <text className="f-ink" x="100" y="78" fontSize="20" fontWeight="500" textAnchor="middle">School OS</text>
-      <rect className="f-red" x="58" y="94" width="84" height="26" rx="3" />
-      <text className="f-on-red" x="100" y="112" fontSize="13" fontWeight="700" textAnchor="middle">Set up</text>
+      <rect className="f-accent" x="58" y="94" width="84" height="26" rx="3" />
+      <text className="f-on-accent" x="100" y="112" fontSize="13" fontWeight="700" textAnchor="middle">Set up</text>
     </svg>
   );
 }
@@ -794,12 +781,12 @@ function KeepCurrentIcon() {
   return (
     <svg viewBox="0 0 200 156" aria-hidden="true">
       <g className="f-none" strokeLinecap="round" strokeLinejoin="round">
-        <path className="s-red" d="M58.7 55A44 44 0 0 1 141.3 55 M144.5 43.2L141.3 55L131.3 48" strokeWidth={2.4} />
-        <path className="s-red" d="M141.3 85A44 44 0 0 1 58.7 85 M68.7 92L58.7 85L55.5 96.8" strokeWidth={2.4} />
+        <path className="s-accent" d="M58.7 55A44 44 0 0 1 141.3 55 M144.5 43.2L141.3 55L131.3 48" strokeWidth={2.4} />
+        <path className="s-accent" d="M141.3 85A44 44 0 0 1 58.7 85 M68.7 92L58.7 85L55.5 96.8" strokeWidth={2.4} />
         <path className="s-ink" d="M86 70L96 80L115 59" strokeWidth={4} />
       </g>
-      <rect className="f-red" x="36" y="126" width="18" height="18" rx="3" />
-      <path className="f-none s-on-red" d="M40 135L44 139L50 131" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+      <rect className="f-accent" x="36" y="126" width="18" height="18" rx="3" />
+      <path className="f-none s-on-accent" d="M40 135L44 139L50 131" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
       <text className="f-ink" x="62" y="140" fontSize="13">Automatic updates</text>
     </svg>
   );
@@ -840,11 +827,11 @@ export function SchoolSetup() {
 const CLOUD = "M110 240H370A70 70 0 0 0 382 101A110 110 0 0 0 175 82A80 80 0 0 0 64 160A50 50 0 0 0 110 240Z";
 
 /** An app in a 64 × 64 tile at (x, y), shown at `size`: mail, calendar or docs. Red for the one in focus. */
-function AppTile({ x, y, size = 64, app, red }: { x: number; y: number; size?: number; app: "mail" | "calendar" | "doc"; red?: boolean }) {
-  const s = red ? "s-on-red" : "s-ink";
+function AppTile({ x, y, size = 64, app, accent }: { x: number; y: number; size?: number; app: "mail" | "calendar" | "doc"; accent?: boolean }) {
+  const s = accent ? "s-on-accent" : "s-ink";
   return (
     <g transform={`translate(${x} ${y}) scale(${size / 64})`}>
-      <rect className={red ? "f-red" : "f-tile"} width="64" height="64" rx="3" />
+      <rect className={accent ? "f-accent" : "f-tile"} width="64" height="64" rx="3" />
       <g className={`f-none ${s}`} strokeWidth={size < 40 ? 1 : 1.6} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke">
         <rect x="10" y="10" width="44" height="44" rx="2" vectorEffect="non-scaling-stroke" />
         <path d="M10 20H54" vectorEffect="non-scaling-stroke" />
@@ -858,7 +845,7 @@ function AppTile({ x, y, size = 64, app, red }: { x: number; y: number; size?: n
       </g>
       {app === "calendar"
         ? [[28, 38], [32, 38], [36, 38], [28, 42], [32, 42]].map(([cx, cy]) => (
-            <circle key={`${cx},${cy}`} className={red ? "f-on-red" : "f-ink"} cx={cx} cy={cy} r="1.4" />
+            <circle key={`${cx},${cy}`} className={accent ? "f-on-accent" : "f-ink"} cx={cx} cy={cy} r="1.4" />
           ))
         : null}
     </g>
@@ -867,11 +854,11 @@ function AppTile({ x, y, size = 64, app, red }: { x: number; y: number; size?: n
 
 const APPS = ["mail", "calendar", "doc"] as const;
 
-/** A key lying across a line at (x, y), drawn in red. */
+/** A key lying across a line at (x, y), drawn in the accent color. */
 function Key({ x, y }: { x: number; y: number }) {
   return (
     <path
-      className="f-none s-red"
+      className="f-none s-accent"
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -902,7 +889,7 @@ export function WhoHoldsTheKeys() {
             <path className="f-none s-ink" strokeWidth={2.4} strokeLinejoin="round" d={CLOUD} />
             <text className="f-muted" x="226" y="112" fontSize="13" fontWeight="700" letterSpacing="2" textAnchor="middle">PROVIDER’S SERVER</text>
             <Key x={330} y={107} />
-            {APPS.map((app, i) => <AppTile key={app} x={133 + i * 75} y={134} app={app} red={app === "calendar"} />)}
+            {APPS.map((app, i) => <AppTile key={app} x={133 + i * 75} y={134} app={app} accent={app === "calendar"} />)}
             <path className="f-none s-dim" strokeWidth={1.6} d={`M240 240V282 M120 ${PEOPLE_Y - 64}V282H360V${PEOPLE_Y - 64} M240 282V${PEOPLE_Y - 64}`} />
             {[120, 240, 360].map((x) => <Person key={x} x={x} y={PEOPLE_Y} />)}
           </svg>
@@ -922,7 +909,7 @@ export function WhoHoldsTheKeys() {
                   transform={`translate(${cx - 237 * SMALL} ${70 - 18 * SMALL}) scale(${SMALL})`}
                   d={CLOUD}
                 />
-                {APPS.map((app, i) => <AppTile key={app} x={cx - 44 + i * 30} y={112} size={26} app={app} red={app === "calendar"} />)}
+                {APPS.map((app, i) => <AppTile key={app} x={cx - 44 + i * 30} y={112} size={26} app={app} accent={app === "calendar"} />)}
                 <path className="f-none s-dim" strokeWidth={1.6} d={`M${cx} 146V${PEOPLE_Y - 64}`} />
                 <Key x={cx + 2} y={236} />
                 <Person x={cx} y={PEOPLE_Y} />
@@ -963,25 +950,25 @@ export function CredibleExit() {
         <text className="f-ink" x="92" y="52" fontSize="22" fontWeight="600">Shared Chromium core</text>
         <text className="f-muted" x="92" y="76" fontSize="17">maintained by Google</text>
 
-        <text className="f-red" x="420" y="104" fontSize="18" fontWeight="700" textAnchor="middle">Hypothetical change</text>
+        <text className="f-accent" x="420" y="104" fontSize="18" fontWeight="700" textAnchor="middle">Hypothetical change</text>
         <text className="f-muted" x="420" y="128" fontSize="17" textAnchor="middle">at Microsoft’s expense</text>
-        <path className="f-none s-red" strokeWidth={1.6} strokeDasharray="3 4" d={`M420 138V${LINE - 16}`} />
+        <path className="f-none s-accent" strokeWidth={1.6} strokeDasharray="3 4" d={`M420 138V${LINE - 16}`} />
         <text className="f-muted" x="220" y={LINE - 20} fontSize="16" textAnchor="middle">last shared version</text>
 
         <g className="f-none" strokeLinecap="round" strokeLinejoin="round">
           <path className="s-ink" strokeWidth={2.5} d={`M20 ${LINE}H616 M604 ${LINE - 10}L616 ${LINE}L604 ${LINE + 10}`} />
-          <path className="s-red" strokeWidth={2.5} strokeDasharray="7 7" d={`M220 ${LINE}C290 ${LINE} 280 ${FORK} 350 ${FORK}H604`} />
-          <path className="s-red" strokeWidth={2.5} d={`M604 ${FORK - 10}L616 ${FORK}L604 ${FORK + 10}`} />
+          <path className="s-accent" strokeWidth={2.5} strokeDasharray="7 7" d={`M220 ${LINE}C290 ${LINE} 280 ${FORK} 350 ${FORK}H604`} />
+          <path className="s-accent" strokeWidth={2.5} d={`M604 ${FORK - 10}L616 ${FORK}L604 ${FORK + 10}`} />
         </g>
         {[60, 140, 220, 510, 580].map((cx) => <circle key={cx} className="f-bg s-ink" strokeWidth={2.5} cx={cx} cy={LINE} r="8" />)}
-        <rect className="f-bg s-red" strokeWidth={2} strokeDasharray="4 3" x="410" y={LINE - 10} width="20" height="20" transform={`rotate(45 420 ${LINE})`} />
-        {[400, 480, 560].map((cx) => <circle key={cx} className="f-bg s-red" strokeWidth={2.5} cx={cx} cy={FORK} r="8" />)}
+        <rect className="f-bg s-accent" strokeWidth={2} strokeDasharray="4 3" x="410" y={LINE - 10} width="20" height="20" transform={`rotate(45 420 ${LINE})`} />
+        {[400, 480, 560].map((cx) => <circle key={cx} className="f-bg s-accent" strokeWidth={2.5} cx={cx} cy={FORK} r="8" />)}
 
         <text className="f-muted" x="140" y={LINE + 34} fontSize="17" textAnchor="middle">Microsoft builds Edge on it</text>
-        <text className="f-red" x="480" y={FORK - 26} fontSize="19" fontWeight="600" textAnchor="middle">Microsoft can maintain its own fork</text>
+        <text className="f-accent" x="480" y={FORK - 26} fontSize="19" fontWeight="600" textAnchor="middle">Microsoft can maintain its own fork</text>
         <text className="f-muted" x="480" y={FORK + 36} fontSize="17" textAnchor="middle">independent of Google’s decisions</text>
 
-        <path className="f-none s-red" strokeWidth={2.5} strokeDasharray="7 7" strokeLinecap="round" d="M20 366H64" />
+        <path className="f-none s-accent" strokeWidth={2.5} strokeDasharray="7 7" strokeLinecap="round" d="M20 366H64" />
         <text className="f-muted" x="76" y="371" fontSize="16">an available path, not an event</text>
       </svg>
     </Figure>

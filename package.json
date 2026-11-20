@@ -1,5 +1,5 @@
 {
-  "name": "project2027",
+  "name": "27stack",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,12 +13,12 @@
     "test": "vitest run",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "og": "node scripts/og-images.ts"
+    "og": "node scripts/og-images.ts",
+    "icons": "node scripts/icons.ts"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",
     "@mdx-js/rollup": "^3.1.1",
-    "@plausible-analytics/tracker": "^0.4.6",
     "@tailwindcss/typography": "^0.5.20",
     "@visx/axis": "^4.0.0",
     "@visx/curve": "^4.0.0",
@@ -26,7 +26,6 @@
     "@visx/responsive": "^4.0.0",
     "@visx/scale": "^4.0.0",
     "@visx/shape": "^4.0.0",
-    "d3-force": "^3.0.0",
     "isbot": "5.1.32",
     "react": "19.3.1",
     "react-dom": "19.3.1",
@@ -43,7 +42,6 @@
     "@cloudflare/workers-types": "^5.20260905.1",
     "@react-router/dev": "8.5.1",
     "@tailwindcss/vite": "4.1.17",
-    "@types/d3-force": "^3.0.10",
     "@types/node": "24.10.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",

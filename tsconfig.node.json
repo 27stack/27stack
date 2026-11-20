@@ -1,6 +1,6 @@
 {
 	"extends": "./tsconfig.json",
-	"include": ["tailwind.config.ts", "vite.config.ts", "plugins", "scripts"],
+	"include": ["tailwind.config.ts", "vite.config.ts", "plugins", "scripts", "app/lib/site.ts"],
 	"compilerOptions": {
 		"composite": true,
 		"allowImportingTsExtensions": true,

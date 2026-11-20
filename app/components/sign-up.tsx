@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { BUTTONDOWN_SLUG } from "~/lib/site";
 import "./sign-up.css";
 
-/** Buttondown's form endpoint for the Project 2027 newsletter. */
-export const SIGN_UP_URL = "https://buttondown.com/api/emails/embed-subscribe/project2027";
+/** Buttondown's form endpoint for the newsletter. */
+export const SIGN_UP_URL = `https://buttondown.com/api/emails/embed-subscribe/${BUTTONDOWN_SLUG}`;
 
 /**
  * Sends a sign-up form (an `email` field, plus `embed`) to Buttondown in the background, so the

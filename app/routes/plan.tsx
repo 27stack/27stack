@@ -25,7 +25,7 @@ const contents: TocSection[] = [
 ];
 
 export const meta: Route.MetaFunction = () =>
-  pageMeta({ title: `${title} | Project 2027`, description: frontmatter.description, path: "/plan" });
+  pageMeta({ title: title, description: frontmatter.description, path: "/plan" });
 
 /** The plan, written in content/plan.mdx. */
 export default function PlanPage() {

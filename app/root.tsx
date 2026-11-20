@@ -12,7 +12,7 @@ export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Inter+Tight:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@1,500..700&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;700&family=Manrope:wght@700&display=swap",
   },
 ];
 
@@ -56,7 +56,9 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-16">
-      <h1 className="text-3xl font-semibold">{message}</h1>
+      <h1 className="text-5xl" style={{ fontFamily: "var(--display)" }}>
+        {message}
+      </h1>
       <p className="mt-4">{details}</p>
       {stack && (
         <pre className="mt-8 w-full overflow-x-auto p-4 text-sm">

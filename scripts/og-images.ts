@@ -1,6 +1,6 @@
 /**
- * Renders the social preview cards (Open Graph / Twitter images) in public/og/: the "27" avatar
- * beside a headline, in the site's colors and type. For now every page shares the one card with
+ * Renders the social preview cards (Open Graph / Twitter images) in public/og/: the logo above a
+ * headline, in the site's colors and type. For now every page shares the one card with
  * the slogan (see app/lib/meta.ts).
  *
  *   pnpm og                  # all cards
@@ -11,28 +11,27 @@
 import { mkdir, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
+import { SITE_NAME, SITE_URL } from "../app/lib/site.ts";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 
 interface Card {
   /** The file name in public/og/, without ".png". */
   slug: string;
-  /** The headline, as HTML: <em> is red, <span class="soft"> is muted. */
+  /** The headline, as HTML. */
   headline: string;
 }
 
 const cards: Card[] = [
   // The home page's headline, styled as the hero styles it.
-  { slug: "slogan", headline: `<span class="soft">No more waiting.</span><br>The rebuild starts <em>now.</em>` },
+  { slug: "slogan", headline: `You used to own<br>your computer.<br>You can again.` },
 ];
 
-/** The avatar's "27" and red bar, without its tile, so the card's own background is the tile. */
-const logo = (await readFile(`${root}public/icon.svg`, "utf8"))
-  .replace(/<metadata>[\s\S]*?<\/metadata>/, "")
-  .replace(/<rect width="64" height="64"[^>]*\/>/, "");
+/** The logo drawn for the navy ground, as it is. */
+const logo = (await readFile(`${root}public/logo-dark.svg`, "utf8")).replace(/<metadata>[\s\S]*?<\/metadata>/, "");
 
 const fonts =
-  "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@700&display=swap";
+  "https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&family=DM+Serif+Display&display=swap";
 
 function page(card: Card) {
   return `<!doctype html>
@@ -42,35 +41,28 @@ function page(card: Card) {
   * { box-sizing: border-box; margin: 0; }
   html, body { width: 1200px; height: 630px; overflow: hidden; }
   body {
-    position: relative;
-    display: grid; grid-template-columns: 400px 1fr; align-items: center;
-    padding: 0 80px 0 40px;
-    background: #0B1230; color: #FFFFFF;
-    font-family: 'Archivo', sans-serif;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 64px 72px;
+    /* The site's dark theme: navy under a riso dot screen. */
+    background: radial-gradient(rgba(255, 255, 255, 0.05) 0.9px, transparent 1.3px) 0 0 / 5px 5px, #14213D;
+    color: #FFF7EC;
+    font-family: 'DM Sans', sans-serif;
   }
-  /* A soft light behind the mark, so the navy isn't flat. */
-  body::before {
-    content: ""; position: absolute; inset: 0;
-    background: radial-gradient(circle at 22% 46%, rgb(255 255 255 / 0.07), transparent 45%);
-  }
-  .mark { position: relative; width: 400px; height: 400px; margin-top: 10px; }
-  .mark svg { width: 100%; height: 100%; display: block; }
-  .text { position: relative; display: flex; flex-direction: column; justify-content: space-between; height: 470px; padding-left: 36px; border-left: 2px solid #262C4A; }
-  .eyebrow, .url { font: 700 22px/1 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: #B7BEDB; }
-  .url { text-transform: none; letter-spacing: 0.02em; }
-  h1 {
-    font-weight: 900; font-stretch: 70%; line-height: 0.92; text-transform: uppercase;
-    text-wrap: balance; letter-spacing: 0.005em;
-  }
-  h1 em { font-style: normal; color: #FF4458; }
-  h1 .soft { color: #B7BEDB; }
+  .top { display: flex; align-items: center; justify-content: space-between; }
+  .mark svg { display: block; width: auto; height: 72px; }
+  .url { font-size: 24px; font-weight: 700; color: #D6D9E3; }
+  .eyebrow { font-size: 22px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #FF8A4D; }
+  .text { display: flex; flex-direction: column; gap: 24px; height: 400px; justify-content: flex-end; }
+  h1 { font-family: 'DM Serif Display', serif; font-weight: 400; line-height: 0.96; letter-spacing: -0.03em; color: #A9B8EE; }
 </style></head>
 <body>
-  <div class="mark">${logo}</div>
+  <div class="top">
+    <div class="mark">${logo}</div>
+    <p class="url">${new URL(SITE_URL).host}</p>
+  </div>
   <div class="text">
-    <p class="eyebrow">Project 2027</p>
+    <p class="eyebrow">${SITE_NAME}</p>
     <h1>${card.headline}</h1>
-    <p class="url">joinproject2027.org</p>
   </div>
 </body></html>`;
 }
@@ -90,10 +82,10 @@ try {
     await tab.evaluate(() => {
       const h1 = document.querySelector("h1")!;
       const box = h1.parentElement!;
-      const room = box.clientHeight - 2 * 60;
+      const room = box.clientHeight - 60;
       for (let size = 132; size >= 48; size -= 2) {
         h1.style.fontSize = `${size}px`;
-        const lines = Math.round(h1.scrollHeight / (size * 0.92));
+        const lines = Math.round(h1.scrollHeight / (size * 0.96));
         if (lines <= 3 && h1.scrollHeight <= room && h1.scrollWidth <= h1.clientWidth) break;
       }
     });

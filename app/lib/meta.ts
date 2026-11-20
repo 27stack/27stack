@@ -1,19 +1,19 @@
-/** Where the site lives. Social previews need absolute URLs for the page and its card. */
-export const SITE_URL = "https://joinproject2027.org";
+import { SITE_NAME, SITE_URL } from "./site";
 
 interface PageMeta {
-  /** The page's own title, or the whole <title> for the home page. */
-  title: string;
+  /** The page's own title. The site's name is added after it; the home page leaves it out. */
+  title?: string;
   description?: string;
   /** The page's path, like "/plan". */
   path: string;
 }
 
 /** The preview card every page shares for now: the avatar and the slogan (scripts/og-images.ts). */
-const CARD = { path: "/og/slogan.png", alt: "Project 2027: No more waiting. The rebuild starts now." };
+const CARD = { path: "/og/slogan.png", alt: `${SITE_NAME}: You used to own your computer. You can again.` };
 
 /** The <title>, description and social preview tags for a page. */
-export function pageMeta({ title, description, path }: PageMeta) {
+export function pageMeta({ title: pageTitle, description, path }: PageMeta) {
+  const title = pageTitle ? `${pageTitle} | ${SITE_NAME}` : SITE_NAME;
   const url = `${SITE_URL}${path}`;
   const image = `${SITE_URL}${CARD.path}`;
   return [
@@ -27,7 +27,7 @@ export function pageMeta({ title, description, path }: PageMeta) {
       : []),
     { tagName: "link", rel: "canonical", href: url },
     { property: "og:type", content: "website" },
-    { property: "og:site_name", content: "Project 2027" },
+    { property: "og:site_name", content: SITE_NAME },
     { property: "og:title", content: title },
     { property: "og:url", content: url },
     { property: "og:image", content: image },

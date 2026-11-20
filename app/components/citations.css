@@ -1,6 +1,6 @@
 /* Citations: the numbers in the text, and the "Sources" list at the end they point to. */
 
-/* A reference: a small red number, with a hit area bigger than it looks. line-height: 0 keeps it
+/* A reference: a small cobalt number, with a hit area bigger than it looks. line-height: 0 keeps it
    from pushing its line away from the others. */
 .prose-site sup:has(> a[data-footnote-ref]) { font-size: 0.6em; line-height: 0; }
 .prose-site sup:has(> a[data-footnote-ref]) + sup:has(> a[data-footnote-ref])::before {
@@ -10,13 +10,13 @@
   position: relative;
   padding-inline: 0.12em;
   font-family: var(--mono); font-weight: 700;
-  color: var(--red-text); text-decoration: none;
+  color: var(--cobalt); text-decoration: none;
   border-radius: 2px;
 }
 .prose-site a[data-footnote-ref]::after { content: ""; position: absolute; inset: -0.9em -0.4em; }
 .prose-site a[data-footnote-ref]:hover { text-decoration: underline; }
 /* Coming back from a source: show which reference it was. */
-.prose-site a[data-footnote-ref][data-target] { background: var(--red); color: var(--on-red); }
+.prose-site a[data-footnote-ref][data-target] { background: var(--cobalt); color: var(--on-cobalt); }
 
 .citations {
   margin-top: 4em;
@@ -37,11 +37,11 @@
   color: var(--muted); text-decoration: none;
 }
 .citations a[data-footnote-backref]::after { content: ""; position: absolute; inset: -0.6em -0.5em; }
-.citations a[data-footnote-backref]:hover { color: var(--red-text); }
+.citations a[data-footnote-backref]:hover { color: var(--cobalt); }
 .citations a[data-footnote-backref] sup { font-size: 0.7em; }
 /* Arriving at a source from the text: mark it. */
 .citations li[data-target] {
   margin-inline: -0.5em -0.5em; padding: 0.4em 0.5em 0.4em 0.8em;
   background: var(--tile);
-  box-shadow: inset 3px 0 0 var(--red);
+  box-shadow: inset 3px 0 0 var(--cobalt);
 }

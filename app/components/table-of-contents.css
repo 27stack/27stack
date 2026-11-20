@@ -53,8 +53,8 @@
     transition: transform 0.2s;
   }
   .toc-toggle[aria-expanded="true"] .toc-chevron { transform: rotate(180deg); }
-  .toc-toggle:hover .toc-chevron { color: var(--red-text); }
-  .toc-toggle:focus-visible { outline: 2px solid var(--red-text); outline-offset: -4px; }
+  .toc-toggle:hover .toc-chevron { color: var(--cobalt); }
+  .toc-toggle:focus-visible { outline: 2px solid var(--cobalt); outline-offset: -4px; }
 
   .toc-list { display: none; }
   .toc[data-open] .toc-list {
@@ -64,7 +64,7 @@
     padding: 8px var(--toc-pad) 16px;
     background: var(--bg);
     border-bottom: 1px solid var(--line);
-    box-shadow: 0 24px 48px -16px rgb(11 18 48 / 0.25);
+    box-shadow: 0 24px 48px -16px rgb(20 33 61 / 0.25);
   }
   .toc-list a {
     display: block; padding: 10px 0 10px 14px;
@@ -73,7 +73,7 @@
   }
   .toc-list > li > a { font-weight: 700; color: var(--ink); }
   .toc-list ol a { padding-left: 30px; font-size: 15px; }
-  .toc-list a[aria-current] { border-left-color: var(--red); color: var(--ink); }
+  .toc-list a[aria-current] { border-left-color: var(--cobalt); color: var(--ink); }
 }
 
 @media (min-width: 1280px) {
@@ -104,6 +104,6 @@
   .toc-list > li[data-current] > a { color: var(--ink); }
   .toc-list ol a { padding-left: 30px; font-size: 13.5px; }
   .toc-list > li + li { margin-top: 2px; }
-  .toc-list a:hover { color: var(--red-text); }
-  .toc-list a[aria-current] { color: var(--ink); border-left-color: var(--red); }
+  .toc-list a:hover { color: var(--cobalt); }
+  .toc-list a[aria-current] { color: var(--ink); border-left-color: var(--cobalt); }
 }

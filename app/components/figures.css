@@ -6,10 +6,15 @@
   --fig-faint: color-mix(in srgb, var(--ink) 26%, var(--bg));
   --fig-dim: color-mix(in srgb, var(--ink) 45%, var(--bg));
   margin: 3rem auto;
+  /* A plain block of the page color, a little wider than the figure, so the dot texture stops
+     short of the art. A shadow rather than padding, so the figure keeps its size. */
+  background: var(--bg);
+  box-shadow: 0 0 0 1.25rem var(--bg);
+  border-radius: 2px;
 }
 .p27-figure svg { display: block; width: 100%; height: auto; overflow: visible; }
 .p27-figure svg text { font-family: var(--body); }
-.p27-figure svg .t-display { font-family: var(--display); font-stretch: 75%; font-weight: 900; }
+.p27-figure svg .t-display { font-family: var(--numeral); font-weight: 700; letter-spacing: -0.04em; }
 .p27-figure figcaption {
   max-width: 30rem;
   font-size: 0.75em;
@@ -20,14 +25,14 @@
 }
 
 .p27-figure .s-ink { stroke: var(--ink); }
-.p27-figure .s-red { stroke: var(--red); }
+.p27-figure .s-accent { stroke: var(--orange); }
 .p27-figure .s-muted { stroke: var(--muted); }
 .p27-figure .s-dim { stroke: var(--fig-dim); }
 .p27-figure .s-faint { stroke: var(--fig-faint); }
 .p27-figure .s-shape { stroke: var(--fig-shape); }
 .p27-figure .s-none { stroke: none; }
 .p27-figure .f-ink { fill: var(--ink); }
-.p27-figure .f-red { fill: var(--red); }
+.p27-figure .f-accent { fill: var(--orange); }
 .p27-figure .f-muted { fill: var(--muted); }
 .p27-figure .f-shape { fill: var(--fig-shape); }
 .p27-figure .f-bg { fill: var(--bg); }
@@ -65,7 +70,7 @@
 .p27-spend-title { font-size: 0.8em; font-weight: 600; color: var(--ink); }
 .p27-spend-key { display: flex; gap: 1rem; margin: 0.35rem 0 0.5rem; font-size: 0.75em; color: var(--muted); }
 .p27-spend-key span { display: inline-flex; align-items: center; gap: 0.4rem; }
-.p27-spend-line { display: inline-block; width: 1.25rem; border-top: 2px solid var(--red); }
+.p27-spend-line { display: inline-block; width: 1.25rem; border-top: 2px solid var(--orange); }
 .p27-spend-line.is-dashed { border-top-style: dashed; }
 
 /* One state to fifty: four small maps in a row, two by two on a phone. The states not yet on
@@ -102,7 +107,7 @@
 .p27-bars-bar { height: 20px; border-radius: 0 4px 4px 0; background: var(--fig-dim); }
 .p27-bars-row.is-linux .p27-bars-bar { background: var(--ink); }
 .p27-bars-value {
-  font-family: var(--display); font-stretch: 75%; font-weight: 900;
+  font-family: var(--numeral); font-weight: 700; letter-spacing: -0.04em;
   font-size: 1.05em; line-height: 1; color: var(--ink); white-space: nowrap;
 }
 @media (max-width: 520px) {
@@ -123,7 +128,7 @@
 .p27-figure .is-cost { background: var(--fig-dim); }
 .p27-split-stat { margin-top: 0.45rem; font-size: 0.8em; color: var(--muted); }
 .p27-split-stat strong {
-  font-family: var(--display); font-stretch: 75%; font-weight: 900;
+  font-family: var(--numeral); font-weight: 700; letter-spacing: -0.04em;
   font-size: 1.3em; color: var(--ink);
 }
 
@@ -143,42 +148,16 @@
   .p27-pain-grid { grid-template-columns: minmax(0, 1fr); row-gap: 1.75rem; }
 }
 
-/* The Paris rooftop (paris.svg) is drawn in night-sky colors; map them onto the theme. */
-.p27-paris [fill="#111d31"] { fill: var(--bg); }
-.p27-paris [stroke="#f2e7cf"] { stroke: var(--ink); }
-.p27-paris [fill="#f2e7cf"] { fill: var(--ink); }
-/* The moon, stars and lit windows keep the drawing's own gold, deepened on light backgrounds. */
-.p27-paris { --paris-gold: #A8822F; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .p27-paris { --paris-gold: #DEC28B; }
-}
-:root[data-theme="dark"] .p27-paris { --paris-gold: #DEC28B; }
-.p27-paris [stroke="#dec28b"] { stroke: var(--paris-gold); }
-.p27-paris [stroke="#b9c1c9"] { stroke: color-mix(in srgb, var(--ink) 60%, var(--muted)); }
-.p27-paris [stroke="#aab6c3"] { stroke: color-mix(in srgb, var(--ink) 40%, var(--muted)); }
-.p27-paris [stroke="#97a5b5"] { stroke: var(--muted); }
-.p27-paris [stroke="#718397"] { stroke: color-mix(in srgb, var(--muted) 60%, var(--bg)); }
-
-/* The Ratatouille line sits under the rooftop as a pull quote rather than a small caption. */
-.p27-figure .p27-paris-quote { max-width: 34rem; margin-top: 1.5rem; font-size: 1em; color: var(--ink); }
-.p27-paris-quote blockquote {
-  margin: 0; padding: 0; border: 0; quotes: none;
-  font-family: var(--serif); font-weight: 500; font-style: italic;
-  font-size: 1.4em; line-height: 1.35; color: var(--ink);
-}
-.p27-paris-quote blockquote::before, .p27-paris-quote blockquote::after { content: none; }
-.p27-paris-quote blockquote::after { content: ""; display: block; width: 2.5rem; height: 2px; margin: 1rem auto 0; background: var(--red); }
-
 /* The paper maze (maze.svg) is drawn in dark-theme colors; map them onto the theme. */
 .p27-maze [fill="#090b1d"] { fill: var(--bg); }
 .p27-maze [stroke="#34384e"] { stroke: color-mix(in srgb, var(--muted) 35%, var(--bg)); }
 .p27-maze [fill="#11152b"] { fill: var(--tile); }
 .p27-maze [stroke="#11152b"] { stroke: var(--tile); }
-.p27-maze [stroke="#f04b53"] { stroke: var(--red); }
-.p27-maze [fill="#f04b53"] { fill: var(--red); }
+.p27-maze [stroke="#f04b53"] { stroke: var(--orange); }
+.p27-maze [fill="#f04b53"] { fill: var(--orange); }
 .p27-maze [fill="#c0c1d0"] { fill: var(--muted); }
 .p27-maze [stroke="#f5f4f0"] { stroke: var(--ink); }
-.p27-maze [stroke="#ffffff"] { stroke: var(--on-red); }
+.p27-maze [stroke="#ffffff"] { stroke: var(--on-orange); }
 
 /* Canvas-drawn figures (perm-*.svg) use the canvas palette; map each color onto the theme. */
 .p27-board [fill="#070B1E"] { fill: var(--bg); }
@@ -192,8 +171,8 @@
 .p27-board [fill="#3A4266"] { fill: var(--fig-faint); }
 .p27-board [stroke="#3A4266"] { stroke: var(--fig-faint); }
 .p27-board [fill="#11173A"] { fill: var(--tile); }
-.p27-board [fill="#E0182D"] { fill: var(--red); }
-.p27-board [stroke="#E0182D"] { stroke: var(--red); }
+.p27-board [fill="#E0182D"] { fill: var(--orange); }
+.p27-board [stroke="#E0182D"] { stroke: var(--orange); }
 
 /* A phone screenshot, with the screen's rounded corners. The hairline keeps a dark screenshot's
    edge from disappearing into the dark theme. */
@@ -207,8 +186,8 @@
 
 /* The School OS setup: three steps in a row with arrows between, stacked on a phone. */
 .p27-figure .f-tile { fill: var(--tile); }
-.p27-figure .f-on-red { fill: var(--on-red); }
-.p27-figure .s-on-red { stroke: var(--on-red); }
+.p27-figure .f-on-accent { fill: var(--on-orange); }
+.p27-figure .s-on-accent { stroke: var(--on-orange); }
 .p27-setup-steps {
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 2.5rem;
   margin: 0; padding: 0; list-style: none;

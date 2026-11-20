@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "project2027",
+      "name": "27stack",
       "runtimeExecutable": "pnpm",
       "runtimeArgs": [
         "run",

@@ -1,170 +1,78 @@
 import { createRoutesStub } from "react-router";
-import { afterEach, expect, test, vi } from "vitest";
-import { userEvent } from "vitest/browser";
+import { expect, test } from "vitest";
 import { render as renderInBrowser } from "vitest-browser-react";
-import { SIGN_UP_URL } from "~/components/sign-up";
 import Home from "./home";
 
-/** Render the home page inside a router, since it links with <Link>, with a stand-in for the plan. */
+/** Render the home page inside a router, since it links with <Link>. */
 function render(page: React.ReactElement) {
-  const Stub = createRoutesStub([
-    { path: "/", Component: () => page },
-    { path: "/plan", Component: () => <p>The plan page</p> },
-  ]);
+  const Stub = createRoutesStub([{ path: "/", Component: () => page }]);
   return renderInBrowser(<Stub initialEntries={["/"]} />);
 }
 
-afterEach(() => {
-  vi.unstubAllGlobals();
-});
-
-/** How many pixels of the canvas have something drawn on them. */
-function painted(canvas: HTMLCanvasElement | null) {
-  const ctx = canvas?.getContext("2d");
-  if (!canvas || !ctx) return 0;
-  const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-  let n = 0;
-  for (let i = 3; i < data.length; i += 4) if (data[i] > 0) n++;
-  return n;
-}
-
-test("home page shows the headline, a link to the plan, and the join button", async () => {
+test("the hero shows the headline, the swing chart, and ways into the plan and the changelog", async () => {
   const screen = await render(<Home />);
+  const main = screen.getByRole("main");
+  const hero = screen.container.querySelector<HTMLElement>(".hero")!;
 
+  expect(hero.textContent).toContain("A short changelog for computing");
   await expect
-    .element(screen.getByRole("heading", { level: 1, name: /No more waiting\.\s*The rebuild starts now\./ }))
+    .element(main.getByRole("heading", { level: 1, name: /You used to own\s*your computer\.\s*You can again\./ }))
     .toBeInTheDocument();
+  await expect.element(main.getByRole("img", { name: /A line swinging between theirs and yours/ })).toBeInTheDocument();
+  expect(hero.querySelector("a.hero-plan")?.textContent).toBe("Read the plan");
+  expect(hero.querySelector("a.hero-plan")?.getAttribute("href")).toBe("/plan");
+  await expect.element(main.getByRole("link", { name: "or start with the changelog" })).toHaveAttribute("href", "#e0");
+  // The link's target is the first entry.
+  expect(screen.container.querySelector("#e0")?.textContent).toContain("1960s");
+});
+
+test("the changelog has four entries, each with its version, its era, its side and a drawing", async () => {
+  const screen = await render(<Home />);
+  const entries = [
+    { label: "Mainframes, rented", year: "1960s", owned: false, heading: "You rented time." },
+    { label: "Personal computers, owned", year: "1980s", owned: true, heading: "You owned the machine." },
+    { label: "Software as a service, rented", year: "2000s", owned: false, heading: "You rented again." },
+    { label: "In-house clouds, owned again", year: "2027", owned: true, heading: "You own it again." },
+  ];
+
+  for (const [i, { label, year, owned, heading }] of entries.entries()) {
+    const entry = screen.container.querySelector<HTMLElement>(`#e${i}`)!;
+    expect(entry.querySelector(".eyebrow")?.textContent).toBe(`v${i + 1} · ${label}`);
+    expect(entry.hasAttribute("data-owned")).toBe(owned);
+    expect(entry.querySelector(".exhibit-year")?.textContent).toBe(year);
+    expect(entry.querySelector("h2")?.textContent).toBe(heading);
+    expect(entry.querySelectorAll("svg[role=img][aria-label]")).toHaveLength(1);
+  }
+  expect(screen.container.querySelectorAll(".exhibit")).toHaveLength(4);
+});
+
+test("the page explains the three layers and how it fits what you already run", async () => {
+  const screen = await render(<Home />);
   const main = screen.getByRole("main");
-  await expect.element(main.getByRole("link", { name: "Read the plan" })).toHaveAttribute("href", "/plan");
-  await expect.element(main.getByRole("button", { name: "Join the flock" })).toBeInTheDocument();
-  // The email field only comes once you join.
-  expect(main.getByRole("textbox").elements()).toHaveLength(0);
-});
 
-test("joining sends you into the flock at once, and opens the line into an email sign-up", async () => {
-  localStorage.clear();
-  // Stands in for Buttondown, so the test signs no one up.
-  const fetch = vi.fn((..._args: Parameters<typeof window.fetch>) => Promise.resolve(new Response(null)));
-  vi.stubGlobal("fetch", fetch);
-  const screen = await render(<Home />);
-  const canvas = screen.container.querySelector<HTMLCanvasElement>("#sky");
-  const youLayer = screen.container.querySelector<HTMLCanvasElement>("#you-layer");
-  await expect.poll(() => painted(canvas)).toBeGreaterThan(0);
-  expect(painted(youLayer)).toBe(0);
-
-  await screen.getByRole("button", { name: "Join the flock" }).click();
-  // "You" is on its way, without waiting for an email.
-  await expect.poll(() => painted(youLayer)).toBeGreaterThan(0);
   await expect
-    .element(screen.getByRole("status"))
-    .toHaveTextContent("You’re in the flock! Enter your email for updates, or skip.");
-  const email = screen.getByRole("textbox", { name: "You’re in! Get email updates:" });
-  await expect.element(email).toHaveAttribute("type", "email");
-  // The sign-up takes the whole line: Read the plan makes way.
-  const main = screen.getByRole("main");
-  await expect.poll(() => main.getByRole("link", { name: "Read the plan" }).elements()).toHaveLength(0);
+    .element(main.getByRole("heading", { level: 2, name: /The PC needed a standard\.\s*So does the cloud\./ }))
+    .toBeInTheDocument();
+  for (const layer of ["Apps on top", "One layer in the middle", "Any hardware underneath"]) {
+    await expect.element(main.getByRole("heading", { level: 3, name: layer })).toBeInTheDocument();
+  }
 
-  // It takes a real click (the page around it lets clicks through to the flock).
-  await email.click();
-  await expect.element(email).toHaveFocus();
-
-  // Without an email, the browser asks for one and nothing is sent.
-  const send = screen.getByRole("button", { name: "Sign up" });
-  await send.click();
-  expect(fetch).not.toHaveBeenCalled();
-
-  // The email goes to Buttondown in the background, so the reader stays here.
-  await email.fill("test@example.com");
-  await send.click();
   await expect
-    .element(screen.getByRole("status"))
-    .toHaveTextContent("Thanks! Check your inbox to confirm. Now read the plan!");
-  expect(fetch).toHaveBeenCalledTimes(1);
-  const [url, init] = fetch.mock.calls[0];
-  expect(url).toBe(SIGN_UP_URL);
-  expect(init?.method).toBe("POST");
-  expect(init?.mode).toBe("no-cors");
-  const body = init?.body as FormData;
-  expect(body.get("email")).toBe("test@example.com");
-  expect(body.get("embed")).toBe("1");
-  expect(screen.container.querySelector("form.signup")).toBeNull();
-
-  // Then the whole line points you to the plan, and focus moves on to it.
-  const next = main.getByRole("link", { name: "You’re in! Now read the plan!" });
-  await expect.element(next).toHaveAttribute("href", "/plan");
-  await expect.element(next).toHaveFocus();
-
-  // It stays on the page: reading the plan is up to the reader.
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-  expect(screen.getByText("The plan page").elements()).toHaveLength(0);
+    .element(main.getByRole("heading", { level: 2, name: "Works with your existing infrastructure" }))
+    .toBeInTheDocument();
+  const steps = [...screen.container.querySelectorAll(".steps > li h3")].map((h) => h.textContent);
+  expect(steps).toEqual(["Start on what you have", "Connect what’s already there", "Move in at your own pace"]);
 });
 
-test("you can skip the email and go straight to the plan", async () => {
-  const fetch = vi.fn(() => Promise.resolve(new Response(null)));
-  vi.stubGlobal("fetch", fetch);
+test("the page closes with where things stand, and links to the plan, to follow, and to get in touch", async () => {
   const screen = await render(<Home />);
+  const standing = screen.container.querySelector<HTMLElement>("#source")!;
+  const link = (name: string) => [...standing.querySelectorAll("a")].find((a) => a.textContent === name);
 
-  await screen.getByRole("button", { name: "Join the flock" }).click();
-  await screen.getByRole("button", { name: "Skip" }).click();
-  const next = screen.getByRole("main").getByRole("link", { name: "You’re in! Now read the plan!" });
-  await expect.element(next).toHaveAttribute("href", "/plan");
-  await expect.element(screen.getByRole("status")).toHaveTextContent("You’re in! Now read the plan!");
-  expect(screen.getByRole("textbox").elements()).toHaveLength(0);
-  expect(fetch).not.toHaveBeenCalled();
-
-  await next.click();
-  await expect.element(screen.getByText("The plan page")).toBeInTheDocument();
-});
-
-test("the flock draws, cycles by default, and holds a picked picture", async () => {
-  localStorage.clear();
-  const screen = await render(<Home />);
-
-  // The simulation loads after the page; once it runs, the canvas has birds on it.
-  const canvas = screen.container.querySelector<HTMLCanvasElement>("canvas");
-  await expect.poll(() => painted(canvas)).toBeGreaterThan(0);
-
-  // The picker is one button naming the picture; it opens a menu of them.
-  const picker = screen.getByRole("button", { name: /^Picture:/ });
-  await expect.element(picker).toHaveAccessibleName("Picture: Flag");
-  await expect.element(picker).toHaveAttribute("aria-expanded", "false");
-  await picker.click();
-  await expect.element(picker).toHaveAttribute("aria-expanded", "true");
-
-  const cycle = screen.getByRole("button", { name: "Cycle" });
-  const flag = screen.getByRole("button", { name: "Flag", exact: true });
-  const map = screen.getByRole("button", { name: "Map" });
-  await expect.element(cycle).toHaveAttribute("aria-pressed", "true");
-  await expect.element(flag).toHaveAttribute("aria-current", "true");
-
-  // Picking one holds it, names it on the button, and closes the menu.
-  await map.click();
-  await expect.element(picker).toHaveAttribute("aria-expanded", "false");
-  await expect.element(picker).toHaveAccessibleName("Picture: Map");
-
-  await picker.click();
-  await expect.element(cycle).toHaveAttribute("aria-pressed", "false");
-  await expect.element(map).toHaveAttribute("aria-pressed", "true");
-  await expect.element(map).toHaveAttribute("aria-current", "true");
-  await expect.element(flag).not.toHaveAttribute("aria-current");
-
-  // Escape closes it again.
-  await userEvent.keyboard("{Escape}");
-  await expect.element(picker).toHaveAttribute("aria-expanded", "false");
-});
-
-test("if the email can't be sent, the field stays so you can try again", async () => {
-  vi.stubGlobal("fetch", () => Promise.reject(new TypeError("Failed to fetch")));
-  const screen = await render(<Home />);
-
-  await screen.getByRole("button", { name: "Join the flock" }).click();
-  const email = screen.getByRole("textbox", { name: "You’re in! Get email updates:" });
-  await email.fill("test@example.com");
-  await screen.getByRole("button", { name: "Sign up" }).click();
   await expect
-    .element(screen.getByRole("status"))
-    .toHaveTextContent("That didn’t go through. Check your connection and try again.");
-  await expect.element(screen.getByText("That didn’t go through. Try again?")).toBeVisible();
-  await expect.element(email).toHaveValue("test@example.com");
-  await expect.element(screen.getByRole("button", { name: "Sign up" })).toBeInTheDocument();
+    .element(screen.getByRole("main").getByRole("heading", { level: 2, name: "Where things stand" }))
+    .toBeInTheDocument();
+  expect(link("Read the plan")?.getAttribute("href")).toBe("/plan");
+  expect(link("Follow the project")?.getAttribute("href")).toBe("/contribute");
+  expect(link("Get in touch")?.getAttribute("href")).toMatch(/^mailto:/);
 });

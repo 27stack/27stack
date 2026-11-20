@@ -1,0 +1,138 @@
+/* The home page, from the "27stack site concepts" design: a hero, a changelog in four entries, and three
+   full-width bands. Sizes are the design's own. */
+.home { display: flex; flex-direction: column; }
+.home h1, .home h2, .home h3, .home p { margin: 0; }
+.home h1, .home h2, .home h3 { font-family: var(--display); font-weight: 400; }
+.home a { text-decoration: none; }
+.home a:hover { opacity: 0.8; }
+
+.home .eyebrow { font-size: 14px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); }
+/* A version number keeps its small v. */
+.home .eyebrow .version { text-transform: none; }
+
+/* The drawings (drawings.tsx): each class is one of the site's colors. */
+.drawing { display: block; width: 100%; height: auto; }
+.drawing polygon { stroke-linejoin: round; stroke-linecap: round; }
+.drawing path { stroke-linecap: round; }
+.drawing .f-none { fill: none; }
+.drawing .f-bg { fill: var(--bg); }
+.drawing .f-ink { fill: var(--ink); }
+.drawing .f-text { fill: var(--text); }
+.drawing .f-tile { fill: var(--tile); }
+.drawing .f-cobalt { fill: var(--cobalt); }
+.drawing .f-cobalt-soft { fill: var(--cobalt-soft); }
+.drawing .f-orange { fill: var(--orange); }
+.drawing .s-ink { stroke: var(--ink); }
+.drawing .s-line { stroke: var(--line); }
+.drawing .s-ground { stroke: var(--ground); }
+.drawing .s-cobalt { stroke: var(--cobalt); }
+.drawing .s-orange { stroke: var(--orange); }
+
+/* The hero. */
+.hero {
+  box-sizing: border-box; width: 100%; max-width: var(--page-width); margin: 0 auto;
+  padding: 32px var(--gutter) 64px;
+  display: flex; flex-direction: column; gap: 30px;
+}
+.hero h1 { font-size: clamp(46px, 7.6vw, 104px); line-height: 0.96; letter-spacing: -0.03em; color: var(--cobalt); }
+.hero-lead { max-width: 700px; font-size: 22px; line-height: 1.45; color: var(--text); text-wrap: pretty; }
+.swing { overflow-x: auto; }
+.swing > div { min-width: 760px; }
+.hero-actions { align-self: flex-start; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 26px; }
+.hero-actions a { display: inline-flex; align-items: center; gap: 6px; height: 54px; font-size: 17px; font-weight: 700; color: var(--ink); }
+.hero-actions .hero-plan {
+  gap: 10px; padding: 0 26px;
+  color: var(--bg); background: var(--ink); border: 2.5px solid var(--ink); border-radius: 999px;
+}
+.hero-actions svg { fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* A changelog entry: the words on one side and the drawing on the other, under a heavy rule. Owned
+   entries are cobalt and put the drawing first; on a phone the two stack in that order. */
+.exhibit { box-sizing: border-box; width: 100%; max-width: var(--page-width); margin: 0 auto; padding: 0 var(--gutter); }
+.exhibit-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr)); gap: 40px 64px; align-items: center;
+  padding: 56px 0 72px;
+  border-top: 3px solid var(--ink);
+}
+.exhibit-text { display: flex; flex-direction: column; gap: 18px; }
+.exhibit[data-owned] .exhibit-text { order: 2; }
+.exhibit-year {
+  font-family: var(--numeral); font-size: clamp(92px, 15vw, 200px); line-height: 0.9; font-weight: 700; letter-spacing: -0.1em;
+  color: var(--orange);
+}
+.exhibit[data-owned] .eyebrow, .exhibit[data-owned] .exhibit-year { color: var(--cobalt); }
+.exhibit h2 { font-size: clamp(28px, 3.4vw, 42px); line-height: 1.08; letter-spacing: -0.5px; }
+.exhibit-body { max-width: 480px; font-size: 19px; line-height: 1.55; text-wrap: pretty; }
+
+/* Where the era sat between theirs and yours: a knob at one end of a track, its side in bold. */
+.slider { display: flex; align-items: center; gap: 12px; max-width: 380px; font-size: 16px; }
+.slider > span:first-child { font-weight: 800; }
+.slider > span:last-child { font-weight: 500; }
+.slider-track { flex: 1; height: 8px; border-radius: 4px; background: var(--line); display: flex; align-items: center; justify-content: flex-start; }
+.slider-knob { width: 26px; height: 26px; border-radius: 50%; background: var(--orange); }
+.exhibit[data-owned] .slider > span:first-child { font-weight: 500; }
+.exhibit[data-owned] .slider > span:last-child { font-weight: 800; }
+.exhibit[data-owned] .slider-track { justify-content: flex-end; }
+.exhibit[data-owned] .slider-knob { background: var(--cobalt); }
+
+/* The full-width bands that close the page. */
+.band-inner {
+  box-sizing: border-box; width: 100%; max-width: var(--page-width); margin: 0 auto;
+  padding: 80px var(--gutter);
+  display: flex; flex-direction: column;
+}
+.band h2 { font-size: clamp(30px, 4.2vw, 54px); line-height: 1.04; letter-spacing: -1px; }
+
+/* How it works: three layers, each a box beside what it means. */
+.how { background: var(--tile); }
+.how .band-inner { padding-block: 88px; gap: 40px; }
+.how-intro { display: flex; flex-direction: column; gap: 12px; max-width: 760px; }
+.how-kicker { font-size: 16px; font-weight: 700; letter-spacing: 0.4px; color: var(--cobalt); }
+.how-intro > p:last-child { font-size: 19px; line-height: 1.55; color: var(--text); text-wrap: pretty; }
+.layers { display: flex; flex-direction: column; gap: 14px; }
+.layer { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 16px 40px; align-items: center; }
+.layer-box {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  min-height: 64px; padding: 22px;
+  color: var(--ink); background: var(--bg); border-radius: 6px;
+}
+.layer-box.is-middle { color: var(--on-cobalt); background: var(--cobalt); }
+.layer-name { margin-right: 8px; font-family: var(--display); font-size: 22px; }
+.layer-or { font-size: 15px; }
+.chip { padding: 8px 14px; font-size: 15px; font-weight: 600; color: var(--bg); background: var(--ink); border-radius: 999px; }
+.is-middle .chip { color: var(--cobalt); background: var(--on-cobalt); }
+.app-tile { box-sizing: border-box; width: 52px; height: 52px; border-radius: 15px; }
+.app-tile.is-cobalt { background: var(--cobalt); }
+.app-tile.is-ink { background: var(--ink); }
+.app-tile.is-soft { background: var(--cobalt-soft); }
+.app-tile.is-empty { border: 2.5px dashed var(--cobalt); }
+.layer-text { display: flex; flex-direction: column; gap: 6px; }
+.layer-text h3 { font-size: 24px; }
+.layer-text p { font-size: 17px; line-height: 1.5; color: var(--text); }
+
+/* Fits what you already run: a solid cobalt band with three numbered steps. */
+.fits { color: var(--on-cobalt); background: var(--cobalt); }
+.fits .band-inner { gap: 16px; }
+.fits h2 { max-width: 900px; }
+.fits-lead { max-width: 640px; font-size: 20px; line-height: 1.5; text-wrap: pretty; }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 16px; margin: 24px 0 0; padding: 0; list-style: none; }
+.step {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 22px 22px 24px;
+  background: var(--on-cobalt-wash); border: 1.5px solid var(--on-cobalt-edge); border-radius: 16px;
+}
+.step-number { font-family: var(--display); font-size: 44px; line-height: 1; color: var(--on-cobalt-accent); }
+.home .step h3 { font-family: var(--body); font-size: 20px; font-weight: 700; line-height: 1.25; }
+.step p, .fits-note { font-size: 16px; line-height: 1.5; color: var(--on-cobalt-soft); }
+.home .fits-note { margin-top: 8px; }
+
+/* Where things stand: dark in both themes. */
+.standing { color: var(--on-deep); background: var(--deep); }
+.standing .band-inner { gap: 20px; }
+.standing p { max-width: 620px; font-size: 20px; line-height: 1.5; color: var(--on-deep-soft); }
+.standing-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 8px; }
+.standing-actions a { display: inline-flex; align-items: center; height: 52px; font-size: 17px; font-weight: 700; }
+.standing-plan { padding: 0 26px; color: var(--on-peach); background: var(--peach); border-radius: 14px; }
+.standing-follow { box-sizing: border-box; padding: 0 24px; color: var(--peach); border: 2px solid var(--peach); border-radius: 14px; }
+.standing-contact { color: var(--on-deep-soft); }
+.standing a:focus-visible { outline-color: var(--peach); }

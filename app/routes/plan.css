@@ -4,11 +4,12 @@
   --page-pad: max(16px, env(safe-area-inset-left));
   --main-pad: clamp(0px, 3vw, 48px);
   min-height: 100svh;
-  padding: 20px var(--page-pad) 96px;
+  padding-bottom: 96px;
 }
+/* The header keeps its own width and padding, so the side padding starts below it. */
 .plan-layout {
   --toc-bleed: calc(var(--page-pad) + var(--main-pad));
-  padding-inline: var(--main-pad);
+  padding-inline: var(--toc-bleed);
 }
 /* 17px on phones, and from 640px prose-xl's 20px, a point smaller. Everything inside is sized in
    em, so it all follows. */

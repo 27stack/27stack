@@ -1,35 +1,31 @@
 ---
 title: The Plan
+description: Most organizations rent the software they depend on. This is the plan to own it again, starting with the public sector and built on 27stack.
 ---
 
-import { LockedIn, RentVsOwn, OneStateToFifty, StillFaxing, TwoLocks, GrownNotDesigned, LinuxVsMicrosoft, LinuxVsMaintenance, PainSignal, WhoHoldsTheKeys, TwoChokepoints, ParisRooftop, PaperMaze, PricedVsPermeable, UseSelectsWhatSpreads, SharedPainPriority, ManyCenters, ParkMobileUpsell, SchoolSetup, CredibleExit, MagSevenRevenue, MagSevenProfit } from "../app/components/figures";
+import { LockedIn, RentVsOwn, OneStateToFifty, StillFaxing, TwoLocks, GrownNotDesigned, LinuxVsMicrosoft, LinuxVsMaintenance, PainSignal, WhoHoldsTheKeys, TwoChokepoints, PaperMaze, PricedVsPermeable, UseSelectsWhatSpreads, SharedPainPriority, ManyCenters, ParkMobileUpsell, SchoolSetup, CredibleExit, MagSevenRevenue, MagSevenProfit } from "../app/components/figures";
 
-Hello! Welcome to Project 2027!
+**The short version:** most organizations rent the software they depend on, and they pay for it in fees, in lock-in, and in control over their own data. This plan is how we get to owning it again, starting with the public sector.
 
-This might seem like an odd introduction. Usually, when you visit a movement's website, you'd expect to find a landing page with a slick design, a sign-up button for a newsletter, maybe a call to action to donate. But this is not your average movement.
+1. **Build.** Pick one small, expensive, bad piece of government software and rebuild it as open source.
+2. **Share.** Run it on [27stack](/), an open foundation that makes a service as easy to install and update as an app, so that one city's win becomes every city's.
+3. **Expand.** Repeat for the next system, then for hospitals, schools, and any organization that wants to own its tools.
+4. **Maintain.** Keep it going the way open source already keeps the internet going: the people who use the software help fix it.
 
-You see, Project 2027 is a _plan_.
+The first step costs $1-2 million, which is a rounding error in a state budget. For scale, the US is set to spend roughly $313 billion on government technology in 2026.[^govtech-spending]
 
-It's a plan that doesn't need a central leader or organization, and it doesn't need donations or funding. The core of it is an idea that can spread like a seed. That anyone can take, plant, and watch grow - including you.
+The rest of this page is the argument, the precedents, and the objections.
 
-Not that you need to! I get it, we're all incredibly busy, and I'm betting you don't like the sound of _even more work_ at the moment. But this plan operates on the Ratatouille model, which is to say:
+## What the plan sets out to do
 
-<ParisRooftop />
-
-Just substitute "chef" with "someone who can take this plan and run with it". So, give this plan a quick skim, and if you think it sounds like a good idea, share it, and you'll have done your part.
-
-Now, on to business!
-
-## Ok, so what _is_ the plan exactly?
-
-Project 2027 is a plan to accomplish 4 core goals. In order from most immediate and realistic, to most abstract and ambitious, they are:
+The plan has 4 core goals. In order from most immediate and realistic, to most abstract and ambitious, they are:
 
 1. **Rebuild local and state government tools and services**, to save money and improve real people's lives.
 2. **Build state capacity and momentum**, so that we're ready for the federal level in 2029.
 3. **Take technology and the internet back from the billionaires**, and return them to the public.
 4. **Reshape the economic narrative for a generation**.
 
-The plan starts with government software. Right now, we effectively rent our software from private companies who charge us for every change, who lock us into their systems, and who have little competition. The US is set to spend roughly _$313 billion_ on technology in 2026 at the federal, state, and local level, and that cost keeps going up.[^govtech-spending]
+The problem underneath all four is one that any organization will recognize: you rent the tools you depend on, and someone else sets the terms. The plan starts with government software because the spending is public, the software is some of the worst out there, and every state and city needs the same things. Right now, we effectively rent our software from private companies who charge us for every change, who lock us into their systems, and who have little competition. The US is set to spend roughly _$313 billion_ on technology in 2026 at the federal, state, and local level, and that cost keeps going up.[^govtech-spending]
 
 <LockedIn />
 
@@ -43,7 +39,7 @@ If we build the software ourselves, then we _own it_. And to put it in perspecti
 
 So, for the same money, we could have a massive public workforce maintaining our software, have plenty left in the budget to cover cloud hosting costs and other expenses, and send the rest of it back to the people and toward other services.
 
-## That sounds great, but... how?
+## How: the open source model
 
 We use the same process that built the Internet: **open source!**
 
@@ -132,17 +128,21 @@ Every state will have its own requirements, processes, statutes, etc. But we sho
 
 Now, there is one more key aspect here. You know how apps on your phone and computer update automatically? We need to implement something like this, but for _services_.
 
-One of the main reasons states and cities will buy a service rather than building it or running it themselves is the cost of maintaining it.[^gao-legacy] We need to bring that cost down, and there will be two main components to doing this:
+One of the main reasons states and cities will buy a service rather than building it or running it themselves is the cost of maintaining it.[^gao-legacy] We need to bring that cost down.
+
+This is what [27stack](/) is for. It's an open foundation that sits between the hardware and the apps, and handles the parts every service needs the same way everywhere: sign-in, updates, backups, networking. It has two jobs:
 
 1. **Standardize cloud server deployments,** so that you can just plug in an off the shelf machine and have your own mini cloud. Or plug a bunch into a datacenter and have a public one for your town, your city, or your state. Cloud compute should essentially be a commodity, and it shouldn't matter where you get it from.
 
-2. **Standardize server app deployments,** so that managing your own instance is a cakewalk. This includes everything from rolling updates to migrations to backups and so on.
+2. **Standardize server app deployments,** so that managing your own instance is a cakewalk. This includes everything from rolling updates to migrations to backups and so on. An app built once for 27stack runs on every cloud that has it.
 
-It needs to get to the point where an IT admin for a rural school can plug in a "cloud-in-a-box" server, setup School OS, check autoupdate, and _generally_ expect things will work and be backed up properly, even if the machine gets unplugged by the janitor or coffee is spilled all over it.
+It needs to get to the point where an IT admin for a rural school can plug in a "cloud-in-a-box" server running 27stack, setup School OS, check autoupdate, and _generally_ expect things will work and be backed up properly, even if the machine gets unplugged by the janitor or coffee is spilled all over it.
 
 <SchoolSetup />
 
-The good news is that most of the work for this phase has already been done in the open source world, we just need to standardize some of the details, harden it, and make it bulletproof.
+The good news is that most of the work for this phase has already been done in the open source world. 27stack is built on Kubernetes, containers and open standards that teams already know. What's left is to standardize the details, harden it, and make it bulletproof.
+
+This is the piece the rest of the plan leans on. Phase 1 produces the apps, 27stack is what lets them travel, and Phases 3 and 4 only work if running your own copy is cheap.
 
 If we do this, the result will be a set of tools and software that can be easily replicated in states and cities across the nation. Tools that will be durable and independent, with the ability to fork or opt-out while still staying up to date and never falling behind.
 
@@ -168,7 +168,7 @@ And thinking more broadly, what if there's a disaster, and the internet is offli
 
 The fact is that companies who run these systems don't have much incentive to make these changes. Their users are the hospitals, and the hospitals are locked in. The regulatory hurdles are large, and new players in the market can't catch up.[^ehr-market] This is exactly the type of market failure where government is supposed to step in and push for change, and that's exactly what we'll do.
 
-From there, we can start to build all of the tools we rely on in public, as apps that we can all run, and own, ourselves, on our own personal clouds. Your email, your calendars, your docs, owned by _you_, not on a corporation's servers or locked into their ecosystem.
+From there, we can start to build all of the tools we rely on in public, as apps that we can all run, and own, ourselves, on our own personal clouds, running that same foundation. Your email, your calendars, your docs, owned by _you_, not on a corporation's servers or locked into their ecosystem.
 
 <WhoHoldsTheKeys />
 
@@ -255,15 +255,13 @@ There are also some historical examples that _haven't_ worked well or have been 
 
   The fragmentation is what caught up with this system in the end though. Every hospital ended up having its own custom deployment, based on legacy languages and databases and their own unique plugins or options. By 2019, the VA was running about 130 different versions of VistA.[^vista-versions] This made it essentially impossible to migrate forward, and eventually, the VA decided to replace it with Oracle Health.
 
-  However, that transition has not been going very well either,[^va-oracle] showing the weakness of contracting out systems to spec. And in the end, this is why the work in Phase 2 is _crucial_. We need to make sure that even if individual users have customizations, everyone can stay up to date with the latest and not create fragmentation or decoherence.
+  However, that transition has not been going very well either,[^va-oracle] showing the weakness of contracting out systems to spec. And in the end, this is why the work in Phase 2 is _crucial_, and why 27stack exists. We need to make sure that even if individual users have customizations, everyone can stay up to date with the latest and not create fragmentation or decoherence.
 
 - **The American Rescue Plan, which set aside $2 billion to modernize unemployment insurance.** The Department of Labor's plan for that money leaned heavily on open source, building modular tools that any state could pick up and reuse.[^arpa-ui] There were a number of issues with this, from the number getting slashed in half during budget fights, to red tape and roadblocks being thrown up everywhere, to the funding ultimately being clawed back by the Trump administration.[^arpa-clawback]
 
   But I think the bigger issue here was that we were going after the biggest target first. The funding was focused on the unemployment insurance system. That is an absolutely _massive_ system, serving tens of millions of Americans, and run separately by every one of the 50 states under federal rules.
 
 As I note below in ["Why start with state and local governments?"](#why-start-with-state-and-local-governments), massive systems that serve that many people are a very different beast than many city or state systems. And the fact is, after the last 50 years of neoliberal dominance, do not have the muscle to build those kinds of systems yet. This is _why_ we need to focus on smaller systems first.
-
-This is why we _need_ Project 2027.
 
 We need to build up the processes, the talent, the skill, and the developer base, so that when we go to take on the leviathans that are the federal systems in 2029, _we are ready_.
 
@@ -284,7 +282,7 @@ I know for many that these vulnerabilities were just another sign of how bad thi
 
 If anything, these recent issues point exactly to the solution outlined above. One of the key problems is the fact that so many apps and services are running their own artisanal mix of various systems with different, outdated versions.[^log4j] This includes many commercial apps, because every company is ultimately trying to maximize profit, and routine maintenance and security fixes regularly get pushed aside for new features.
 
-If we make server apps work and update as smoothly as an app on your phone, then we can get the ecosystem moving together more smoothly and ensure that critical security updates rollout quickly and effectively. The end result will be a safer, less stressful world for all of us.
+If we make server apps work and update as smoothly as an app on your phone, which is 27stack's whole job, then we can get the ecosystem moving together more smoothly and ensure that critical security updates rollout quickly and effectively. The end result will be a safer, less stressful world for all of us.
 
 ### What about the geopolitics of it?
 
@@ -348,7 +346,7 @@ The point being that yes, we _must meet this bar_. Full stop. I reiterate this b
 
 The good news is that we aren't starting from scratch here. Compliance has traditionally been a point-in-time audit: a system gets reviewed, approved, and then more or less frozen, because every major change means another review. But most of those checks can be automated and run in the deployment pipeline on _every single update_, scanning dependencies for known vulnerabilities, verifying that configurations still match the approved security controls, recording exactly what changed and who signed off on it, and blocking the release if anything fails. The federal government is already heading this way. FedRAMP, the program that approves cloud services for federal agencies, and the Department of Defense are both building paths where systems are validated continuously instead of being reauthorized from scratch.[^continuous-compliance]
 
-If we build those checks into the shared platform once, then every app and every state that runs on it inherits them. That's a much stronger compliance story than a binder that gets updated once a year.
+If we build those checks into 27stack once, then every app and every state that runs on it inherits them. That's a much stronger compliance story than a binder that gets updated once a year.
 
 This will be difficult. It is a very high bar to fulfill.
 
@@ -422,10 +420,6 @@ We also have a major advantage now, which is that _we know what we're trying to 
 I know, I know, I can hear a bunch of people shouting "what about AI???" at the screen. Yes, AI is new and paradigm shifting in some ways. But the fact is, even if you have an AI agent filling out forms and entering data most of the time, you will still want the ability to _manually_ review the forms, correct? And you'll still want a basic UI that allows you to navigate your data, no?
 
 That is the part that is unlikely to change dramatically, and it's exactly the part that we can commodify and improve in the commons _today_.
-
-### Is this related to [usaproject2027.org](https://usaproject2027.org/)?
-
-No, that site went up in [2025](https://web.archive.org/web/20251015000000*/https://usaproject2027.org/) and has been fairly static. While I respect the fact that they saw the need for this early, at this point the 2027 elections have happened and I think the name could be put to better use, focusing on what we can actually do here and now.
 
 ## Notes for Implementers
 
@@ -527,7 +521,7 @@ We must work to build the best software the world has ever seen. And we must rem
 
 ## How do I help?
 
-There are 3 main paths at the moment for contributing: sharing it, joining the discussion, and funding. The [Contribute](/contribute) page has the details for each.
+There are 2 main paths at the moment for contributing: following along and joining the discussion. The [Contribute](/contribute) page has the details for each.
 
 {/* Sources. Each [^name] above links to its entry here; the page numbers them in the order they're cited. */}
 

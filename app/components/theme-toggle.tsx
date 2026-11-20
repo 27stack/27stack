@@ -1,4 +1,4 @@
-const STORAGE_KEY = "p2027-theme";
+const STORAGE_KEY = "27stack-theme";
 
 /**
  * Runs inline in <head>, before the page paints, so a saved choice never flashes the other theme.
