@@ -1,9 +1,11 @@
-/* The site header, from the "27stack site concepts" design: the logo, then the links, in a bar as
-   wide as the page's sections. */
+/* The site header, from the "27stack site concepts" design: the logo, then the links. The bar runs
+   the full width of the window, in the plain page color with a rule under it, so the dot texture
+   starts below it; its side padding keeps the logo and links in line with the page's sections. */
 header.top {
-  box-sizing: border-box; width: 100%; max-width: var(--page-width); min-height: 80px; margin: 0 auto;
-  padding: 16px var(--gutter);
+  box-sizing: border-box; width: 100%; min-height: 80px;
+  padding: 16px max(var(--gutter), (100% - var(--page-width)) / 2 + var(--gutter));
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px;
+  background: var(--bg); border-bottom: 1px solid var(--line);
 }
 /* The logo comes drawn for each ground: one for the cream page, one for the navy. */
 .mark { display: inline-flex; align-items: center; min-height: 44px; }
