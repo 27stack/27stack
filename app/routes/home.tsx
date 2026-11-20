@@ -81,22 +81,21 @@ export default function Home() {
             <br />
             We can again.
           </h1>
-          <div className="hero-lead">
-            <p>
-              Computing keeps swinging between machines we rent and machines we own. Right now our cities, schools,
-              agencies and local businesses rent the software they run on, and pay for every change.
-            </p>
-            <p>
-              <strong>{SITE_NAME}</strong> is the swing back: an open foundation for a cloud your organization owns.
-              Public infrastructure for anyone who wants their tools back.
-            </p>
-          </div>
-          {/* The chart keeps a readable width and scrolls sideways on a phone. */}
+          <p className="hero-lead">
+            Computing keeps swinging between machines we rent and machines we own. Right now our cities, schools,
+            agencies and local businesses rent the software they run on, and pay for every change.
+          </p>
+          {/* The chart sits between the problem and the answer. It takes the height the screen has left, and on a
+              phone it keeps a readable width and scrolls sideways. */}
           <div className="swing">
             <div>
               <SwingChart />
             </div>
           </div>
+          <p className="hero-lead">
+            <strong>{SITE_NAME}</strong> is the swing back: an open foundation for a cloud your organization owns.
+            Public infrastructure for anyone who wants their tools back.
+          </p>
           <div className="hero-actions">
             <Link className="hero-plan" to="/plan">
               Read the plan

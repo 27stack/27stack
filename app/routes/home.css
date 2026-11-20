@@ -29,22 +29,31 @@
 .drawing .s-orange { stroke: var(--orange); }
 
 /* The hero. */
+/* Its sizes follow the screen's height as well as its width, so that on a laptop the whole of it
+   shows at once. */
 .hero {
   box-sizing: border-box; width: 100%; max-width: var(--page-width); margin: 0 auto;
-  padding: 32px var(--gutter) 64px;
-  display: flex; flex-direction: column; gap: 30px;
+  padding: clamp(8px, 7svh - 44px, 32px) var(--gutter) clamp(24px, 11svh - 52px, 64px);
+  display: flex; flex-direction: column; gap: clamp(12px, 4svh - 14px, 30px);
 }
-.hero h1 { font-size: clamp(46px, 7.6vw, 104px); line-height: 0.96; letter-spacing: -0.03em; color: var(--cobalt); }
-.hero-lead {
-  display: flex; flex-direction: column; gap: 16px;
-  max-width: 700px; font-size: 22px; line-height: 1.45; color: var(--text); text-wrap: pretty;
-}
+.hero h1 { font-size: clamp(46px, min(7.6vw, 14svh - 50px), 92px); line-height: 0.96; letter-spacing: -0.03em; color: var(--cobalt); }
+/* Its width is in ems, so the lines break in the same places at every size. */
+.hero-lead { max-width: 36em; font-size: clamp(17px, 1.6svh + 5.5px, 20px); line-height: 1.45; color: var(--text); text-wrap: pretty; }
 /* The name, in the headline's color. */
 .hero-lead strong { font-weight: 700; color: var(--cobalt); }
 .swing { overflow-x: auto; }
 .swing > div { min-width: 760px; }
+/* Where the chart fits across, the hero fills the screen under the header (80px, site-header.css)
+   and the chart takes whatever height is left: it shrinks, keeping to the left, down to the width
+   it stays readable at, and sits in the middle of any room to spare. */
+@media (min-width: 860px) {
+  .hero { min-height: calc(100vh - 80px); min-height: calc(100svh - 80px); }
+  .swing { position: relative; flex: 1 1 0; min-height: 174px; overflow: visible; }
+  .swing > div { position: absolute; inset: 0; min-width: 0; }
+  .swing .drawing { height: 100%; }
+}
 .hero-actions { align-self: flex-start; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 26px; }
-.hero-actions a { display: inline-flex; align-items: center; gap: 6px; height: 54px; font-size: 17px; font-weight: 700; color: var(--ink); }
+.hero-actions a { display: inline-flex; align-items: center; gap: 6px; height: clamp(46px, 3svh + 24px, 54px); font-size: 17px; font-weight: 700; color: var(--ink); }
 .hero-actions .hero-plan {
   gap: 10px; padding: 0 26px;
   color: var(--bg); background: var(--ink); border: 2.5px solid var(--ink); border-radius: 999px;

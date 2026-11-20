@@ -15,9 +15,12 @@ test("the hero shows the headline, the swing chart, and ways into the plan and t
   const hero = screen.container.querySelector<HTMLElement>(".hero")!;
 
   expect(hero.querySelector(".eyebrow")?.textContent).toBe("An open cloud for public infrastructure");
-  // The lead says who has the problem, then what 27stack is and who it's for, in two paragraphs.
-  const [problem, answer, ...rest] = hero.querySelectorAll(".hero-lead > p");
+  // The lead says who has the problem, then what 27stack is and who it's for, with the chart between the two.
+  const [problem, answer, ...rest] = hero.querySelectorAll("p.hero-lead");
   expect(rest).toHaveLength(0);
+  const chart = hero.querySelector(".swing")!;
+  expect(problem.compareDocumentPosition(chart) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect(chart.compareDocumentPosition(answer) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   expect(problem.textContent).toMatch(/our cities, schools,\s+agencies and local businesses rent the software/);
   expect(answer.querySelector("strong")?.textContent).toBe("27stack");
   expect(answer.textContent).toMatch(

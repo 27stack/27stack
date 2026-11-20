@@ -6,7 +6,7 @@
 /** Computing swinging between theirs and yours, from the 1960s to 2027. */
 export function SwingChart() {
   return (
-    <svg className="drawing" role="img" aria-label="A line swinging between theirs and yours: rented in the 1960s, owned in the 1980s, rented again in the 2000s, and a dashed line swinging back to owned in 2027." viewBox="0 0 1136 260">
+    <svg className="drawing" role="img" aria-label="A line swinging between theirs and yours: rented in the 1960s, owned in the 1980s, rented again in the 2000s, and a dashed line swinging back to owned in 2027." viewBox="0 0 1136 260" preserveAspectRatio="xMinYMid meet">
       <path className="f-none s-line" d="M70 50L1136 50" strokeWidth="2" />
       <path className="f-none s-line" d="M70 210L1136 210" strokeWidth="2" />
       <text className="f-orange" x="0" y="55" fontSize="16" fontWeight="800">Theirs</text>
